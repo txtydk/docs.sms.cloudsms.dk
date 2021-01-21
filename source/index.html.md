@@ -1,241 +1,479 @@
 ---
-title: API Reference
+title: P34 v2.0.0
+language_tabs:
+  - shell: cURL
+  - php: PHP
+  - python: Python
+  - go: Go
+  - javascript: JavaScript
+  - csharp: C#
+  - ruby: Ruby
+language_clients:
+  - shell: ""
+  - php: cURL
+  - python: requests
+  - go: ""
+  - javascript: ""
+  - csharp: ""
+  - ruby: ""
+toc_footers: []
+includes: []
+search: false
+highlight_theme: darkula
+headingLevel: 2
 
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
-
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
-
-includes:
-  - errors
-
-search: true
-
-code_clipboard: true
 ---
 
-# Introduction
+<!-- Generator: Widdershins v4.0.1 -->
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+<h1 id="p34">P34 v2.0.0</h1>
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+> Scroll down for code samples, example requests and responses. Select a language for code samples from the tabs above or the mobile navigation menu.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+This API contain directory listing of residents and companies in Denmark.
+
+You can only access this API with a username and password. To aquire that please fill out your contact information on the public website.
+
+### Conventions
+  * Basic authentication
+  * Only understands HTTPS
+  * Only understands JSON
+
+### Changelog
+  * **2021-01-21**: Published documentation
+
+### Endpoints
+
+Base URLs:
+
+* <a href="https://rest.p34.dk">https://rest.p34.dk</a>
 
 # Authentication
 
-> To authorize, use this code:
+- HTTP Authentication, scheme: basic 
 
-```ruby
-require 'kittn'
+<h1 id="p34-phone">phone</h1>
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
+## Find by phone number
+
+<a id="opIdgetPhoneById"></a>
+
+> Code samples
+
+```shell
+curl --request GET \
+  --url https://rest.p34.dk/v2/dk/phone/0 \
+  --header 'Accept: application/json'
+```
+
+```php
+<?php
+
+$curl = curl_init();
+
+curl_setopt_array($curl, [
+  CURLOPT_URL => "https://rest.p34.dk/v2/dk/phone/0",
+  CURLOPT_RETURNTRANSFER => true,
+  CURLOPT_ENCODING => "",
+  CURLOPT_MAXREDIRS => 10,
+  CURLOPT_TIMEOUT => 30,
+  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+  CURLOPT_CUSTOMREQUEST => "GET",
+  CURLOPT_HTTPHEADER => [
+    "Accept: application/json"
+  ],
+]);
+
+$response = curl_exec($curl);
+$err = curl_error($curl);
+
+curl_close($curl);
+
+if ($err) {
+  echo "cURL Error #:" . $err;
+} else {
+  echo $response;
+}
 ```
 
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
+url = "https://rest.p34.dk/v2/dk/phone/0"
+
+headers = {'Accept': 'application/json'}
+
+response = requests.request("GET", url, headers=headers)
+
+print(response.text)
 ```
 
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
+```go
+package main
 
-```javascript
-const kittn = require('kittn');
+import (
+	"fmt"
+	"net/http"
+	"io/ioutil"
+)
 
-let api = kittn.authorize('meowmeowmeow');
-```
+func main() {
 
-> Make sure to replace `meowmeowmeow` with your API key.
+	url := "https://rest.p34.dk/v2/dk/phone/0"
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+	req, _ := http.NewRequest("GET", url, nil)
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+	req.Header.Add("Accept", "application/json")
 
-`Authorization: meowmeowmeow`
+	res, _ := http.DefaultClient.Do(req)
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
+	defer res.Body.Close()
+	body, _ := ioutil.ReadAll(res.Body)
 
-# Kittens
+	fmt.Println(res)
+	fmt.Println(string(body))
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+}
 ```
 
 ```javascript
-const kittn = require('kittn');
+const data = null;
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
+const xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
 
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === this.DONE) {
+    console.log(this.responseText);
   }
-]
+});
+
+xhr.open("GET", "https://rest.p34.dk/v2/dk/phone/0");
+xhr.setRequestHeader("Accept", "application/json");
+
+xhr.send(data);
 ```
 
-This endpoint retrieves all kittens.
+```csharp
+var client = new RestClient("https://rest.p34.dk/v2/dk/phone/0");
+var request = new RestRequest(Method.GET);
+request.AddHeader("Accept", "application/json");
+IRestResponse response = client.Execute(request);
+```
 
-### HTTP Request
+```ruby
+require 'uri'
+require 'net/http'
+require 'openssl'
 
-`GET http://example.com/api/kittens`
+url = URI("https://rest.p34.dk/v2/dk/phone/0")
 
-### Query Parameters
+http = Net::HTTP.new(url.host, url.port)
+http.use_ssl = true
+http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+request = Net::HTTP::Get.new(url)
+request["Accept"] = 'application/json'
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+response = http.request(request)
+puts response.read_body
+```
+
+`GET /v2/dk/phone/{phone}`
+
+Returns a single directory listing
+
+<h3 id="find-by-phone-number-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|phone|path|integer(int64)|true|Phone number|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+  "phone": 0,
+  "address": {
+    "street": "string",
+    "streetcode": 0,
+    "numberfrom": "string",
+    "numberto": "string",
+    "letterfrom": "string",
+    "letterto": "string",
+    "floor": "string",
+    "door": "string",
+    "zipcode": 0,
+    "cityname": "string",
+    "altcityname": "string",
+    "countrycode": "string",
+    "coname": "string",
+    "freetext": "string",
+    "municipalitycode": 0,
+    "municipalityname": "string",
+    "mailbox": "string",
+    "kvh": "string",
+    "kvhx": "string",
+    "longitude": 0,
+    "latitude": 0
+  },
+  "contact": {
+    "range": {
+      "start": 0,
+      "end": 0
+    }
+  },
+  "life": {
+    "name": "string",
+    "firstname": "string",
+    "middlename": "string",
+    "lastname": "string",
+    "position": "string",
+    "gender": "string",
+    "deceased": true
+  },
+  "company": {
+    "name": "string",
+    "legal_name": "string",
+    "vat": "string"
+  },
+  "prepaid": true,
+  "telcom": "string"
+}
+```
+
+<h3 id="find-by-phone-number-responses">Responses</h3>
+
+|Status|Meaning|Description|Schema|
+|---|---|---|---|
+|200|[OK](https://tools.ietf.org/html/rfc7231#section-6.3.1)|Successful directory listing|[Phone](#schemaphone)|
+|401|[Unauthorized](https://tools.ietf.org/html/rfc7235#section-3.1)|Authentication information is missing or invalid|None|
+|404|[Not Found](https://tools.ietf.org/html/rfc7231#section-6.5.4)|Directory listing not found|None|
+
+### Response Headers
+
+|Status|Header|Type|Format|Description|
+|---|---|---|---|---|
+|401|WWW_Authenticate|string||none|
+
+<aside class="warning">
+To perform this operation, you must be authenticated by means of one of the following methods:
+authentication
 </aside>
 
-## Get a Specific Kitten
+# Schemas
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
+<h2 id="tocS_Phone">Phone</h2>
+<!-- backwards compatibility -->
+<a id="schemaphone"></a>
+<a id="schema_Phone"></a>
+<a id="tocSphone"></a>
+<a id="tocsphone"></a>
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "phone": 0,
+  "address": {
+    "street": "string",
+    "streetcode": 0,
+    "numberfrom": "string",
+    "numberto": "string",
+    "letterfrom": "string",
+    "letterto": "string",
+    "floor": "string",
+    "door": "string",
+    "zipcode": 0,
+    "cityname": "string",
+    "altcityname": "string",
+    "countrycode": "string",
+    "coname": "string",
+    "freetext": "string",
+    "municipalitycode": 0,
+    "municipalityname": "string",
+    "mailbox": "string",
+    "kvh": "string",
+    "kvhx": "string",
+    "longitude": 0,
+    "latitude": 0
+  },
+  "contact": {
+    "range": {
+      "start": 0,
+      "end": 0
+    }
+  },
+  "life": {
+    "name": "string",
+    "firstname": "string",
+    "middlename": "string",
+    "lastname": "string",
+    "position": "string",
+    "gender": "string",
+    "deceased": true
+  },
+  "company": {
+    "name": "string",
+    "legal_name": "string",
+    "vat": "string"
+  },
+  "prepaid": true,
+  "telcom": "string"
 }
+
 ```
 
-This endpoint retrieves a specific kitten.
+### Properties
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|phone|integer(int64)|false|none|Phone number|
+|address|[Address](#schemaaddress)|false|none|none|
+|contact|[Contact](#schemacontact)|false|none|none|
+|life|[Life](#schemalife)|false|none|none|
+|company|[Company](#schemacompany)|false|none|none|
+|prepaid|boolean|false|none|Is subscription prepaid|
+|telcom|string¦null|false|none|Telephone company|
 
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
+<h2 id="tocS_Address">Address</h2>
+<!-- backwards compatibility -->
+<a id="schemaaddress"></a>
+<a id="schema_Address"></a>
+<a id="tocSaddress"></a>
+<a id="tocsaddress"></a>
 
 ```json
 {
-  "id": 2,
-  "deleted" : ":("
+  "street": "string",
+  "streetcode": 0,
+  "numberfrom": "string",
+  "numberto": "string",
+  "letterfrom": "string",
+  "letterto": "string",
+  "floor": "string",
+  "door": "string",
+  "zipcode": 0,
+  "cityname": "string",
+  "altcityname": "string",
+  "countrycode": "string",
+  "coname": "string",
+  "freetext": "string",
+  "municipalitycode": 0,
+  "municipalityname": "string",
+  "mailbox": "string",
+  "kvh": "string",
+  "kvhx": "string",
+  "longitude": 0,
+  "latitude": 0
 }
+
 ```
 
-This endpoint deletes a specific kitten.
+### Properties
 
-### HTTP Request
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|street|string¦null|false|none|Street name|
+|streetcode|integer(string)¦null|false|none|Unique street code|
+|numberfrom|string¦null|false|none|House number from|
+|numberto|string¦null|false|none|House number to|
+|letterfrom|string¦null|false|none|House letter from|
+|letterto|string¦null|false|none|House letter to|
+|floor|string¦null|false|none|Floor in building|
+|door|string¦null|false|none|Door in building|
+|zipcode|integer(int64)¦null|false|none|Zipcode|
+|cityname|string¦null|false|none|City|
+|altcityname|string¦null|false|none|Place name|
+|countrycode|string¦null|false|none|Country code|
+|coname|string¦null|false|none|Care of|
+|freetext|string¦null|false|none|An address written when not matched|
+|municipalitycode|integer(int64)¦null|false|none|Municipality code|
+|municipalityname|string¦null|false|none|Municipality name|
+|mailbox|string¦null|false|none|Mailbox|
+|kvh|string¦null|false|none|Danish KVH code|
+|kvhx|string¦null|false|none|Danish KVHX code|
+|longitude|number(float)¦null|false|none|WGS84 longitude|
+|latitude|number(float)¦null|false|none|WGS84 latitude|
 
-`DELETE http://example.com/kittens/<ID>`
+<h2 id="tocS_Contact">Contact</h2>
+<!-- backwards compatibility -->
+<a id="schemacontact"></a>
+<a id="schema_Contact"></a>
+<a id="tocScontact"></a>
+<a id="tocscontact"></a>
 
-### URL Parameters
+```json
+{
+  "range": {
+    "start": 0,
+    "end": 0
+  }
+}
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|range|object|false|none|none|
+|» start|integer(int64)¦null|false|none|First number in number range|
+|» end|integer(int64)¦null|false|none|Last number in number range|
+
+<h2 id="tocS_Life">Life</h2>
+<!-- backwards compatibility -->
+<a id="schemalife"></a>
+<a id="schema_Life"></a>
+<a id="tocSlife"></a>
+<a id="tocslife"></a>
+
+```json
+{
+  "name": "string",
+  "firstname": "string",
+  "middlename": "string",
+  "lastname": "string",
+  "position": "string",
+  "gender": "string",
+  "deceased": true
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|name|string¦null|false|none|Full name|
+|firstname|string¦null|false|none|Firstname|
+|middlename|string¦null|false|none|Middle part of name|
+|lastname|string¦null|false|none|Lastname|
+|position|string¦null|false|none|Position in CPR|
+|gender|string¦null|false|none|Gender|
+|deceased|boolean|false|none|Deceased in CPR|
+
+<h2 id="tocS_Company">Company</h2>
+<!-- backwards compatibility -->
+<a id="schemacompany"></a>
+<a id="schema_Company"></a>
+<a id="tocScompany"></a>
+<a id="tocscompany"></a>
+
+```json
+{
+  "name": "string",
+  "legal_name": "string",
+  "vat": "string"
+}
+
+```
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|name|string¦null|false|none|Name|
+|legal_name|string¦null|false|none|Full legal name|
+|vat|string¦null|false|none|VAT|
 
