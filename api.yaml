@@ -1,0 +1,242 @@
+openapi: 3.0.0
+servers:
+  - url: https://rest.p34.dk
+    description: Production
+info:
+  version: "2.0.0"
+  title: P34
+  description: |
+    This API contain directory listing of residents and companies in Denmark.
+
+    You can only access this API with a username and password. To aquire that please fill out your contact information on the public website.
+
+    ### Conventions
+      * Basic authentication
+      * Only understands HTTPS
+      * Only understands JSON
+
+    ### Changelog
+      * **2021-01-21**: Published documentation
+
+    ### Endpoints
+security:
+  - authentication: []
+tags:
+  - name: phone
+paths:
+  /v2/dk/phone/{phone}:
+    summary: Returns a single directory listing
+    description: This resource represents an individual directory listing in the system.
+    get:
+      summary: Find by phone number
+      description: Returns a single directory listing
+      operationId: getPhoneById
+      parameters:
+        - name: phone
+          in: path
+          description: Phone number
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Successful directory listing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Phone'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          description: Directory listing not found
+      tags:
+        - phone
+components:
+  securitySchemes:
+    authentication:
+      type: http
+      scheme: basic
+  schemas:
+    Phone:
+      type: object
+      properties:
+        phone:
+           type: integer
+           format: int64
+           description: Phone number
+        address:
+           $ref: '#/components/schemas/Address'
+        contact:
+           $ref: '#/components/schemas/Contact'
+        life:
+           $ref: '#/components/schemas/Life'
+        company:
+           $ref: '#/components/schemas/Company'
+        prepaid:
+           type: boolean
+           description: Is subscription prepaid
+        telcom:
+           type: string
+           nullable: true
+           description: Telephone company
+    Address:
+      type: object
+      properties:
+        street:
+           type: string
+           nullable: true
+           description: Street name
+        streetcode:
+           type: integer
+           format: string
+           nullable: true
+           description: Unique street code
+        numberfrom:
+           type: string
+           nullable: true
+           description: House number from
+        numberto:
+           type: string
+           nullable: true
+           description: House number to
+        letterfrom:
+           type: string
+           nullable: true
+           description: House letter from
+        letterto:
+           type: string
+           nullable: true
+           description: House letter to
+        floor:
+           type: string
+           nullable: true
+           description: Floor in building
+        door:
+           type: string
+           nullable: true
+           description: Door in building
+        zipcode:
+           type: integer
+           format: int64
+           nullable: true
+           description: Zipcode
+        cityname:
+           type: string
+           nullable: true
+           description: City
+        altcityname:
+           type: string
+           nullable: true
+           description: Place name
+        countrycode:
+           type: string
+           nullable: true
+           description: Country code
+        coname:
+           type: string
+           nullable: true
+           description: Care of
+        freetext:
+           type: string
+           nullable: true
+           description: An address written when not matched
+        municipalitycode:
+           type: integer
+           format: int64
+           nullable: true
+           description: Municipality code
+        municipalityname:
+           type: string
+           nullable: true
+           description: Municipality name
+        mailbox:
+           type: string
+           nullable: true
+           description: Mailbox
+        kvh:
+           type: string
+           nullable: true
+           description: Danish KVH code
+        kvhx:
+           type: string
+           nullable: true
+           description: Danish KVHX code
+        longitude:
+           type: number
+           format: float
+           nullable: true
+           description: WGS84 longitude
+        latitude:
+           type: number
+           format: float
+           nullable: true
+           description: WGS84 latitude
+    Contact:
+      type: object
+      properties:
+        range:
+          type: object
+          properties:
+            start:
+               type: integer
+               format: int64
+               nullable: true
+               description: First number in number range
+            end:
+               type: integer
+               format: int64
+               nullable: true
+               description: Last number in number range
+    Life:
+      type: object
+      properties:
+        name:
+           type: string
+           nullable: true
+           description: Full name
+        firstname:
+           type: string
+           nullable: true
+           description: Firstname
+        middlename:
+           type: string
+           nullable: true
+           description: Middle part of name
+        lastname:
+           type: string
+           nullable: true
+           description: Lastname
+        position:
+           type: string
+           nullable: true
+           description: Position in CPR
+        gender:
+           type: string
+           nullable: true
+           description: Gender
+        deceased:
+           type: boolean
+           description: Deceased in CPR
+    Company:
+      type: object
+      properties:
+        name:
+           type: string
+           nullable: true
+           description: Name
+        legal_name:
+           type: string
+           nullable: true
+           description: Full legal name
+        vat:
+           type: string
+           nullable: true
+           description: VAT
+  responses:
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+      headers:
+        WWW_Authenticate:
+          schema:
+            type: string
