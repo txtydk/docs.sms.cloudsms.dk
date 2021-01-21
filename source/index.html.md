@@ -32,7 +32,7 @@ headingLevel: 2
 
 This API contain directory listing of residents and companies in Denmark.
 
-You can only access this API with a username and password. To aquire that please fill out your contact information on the public website.
+You can only access this API with a username and password. To acquire that please fill out your contact information on the public website.
 
 ### Conventions
   * Basic authentication
