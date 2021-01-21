@@ -63,7 +63,8 @@ Base URLs:
 ```shell
 curl --request GET \
   --url https://rest.p34.dk/v2/dk/phone/0 \
-  --header 'Accept: application/json'
+  --header 'Accept: application/json' \
+  --header 'Authorization: Basic {access-token}'
 ```
 
 ```php
@@ -80,7 +81,8 @@ curl_setopt_array($curl, [
   CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   CURLOPT_CUSTOMREQUEST => "GET",
   CURLOPT_HTTPHEADER => [
-    "Accept: application/json"
+    "Accept: application/json",
+    "Authorization: Basic {access-token}"
   ],
 ]);
 
@@ -101,7 +103,10 @@ import requests
 
 url = "https://rest.p34.dk/v2/dk/phone/0"
 
-headers = {'Accept': 'application/json'}
+headers = {
+    'Accept': "application/json",
+    'Authorization': "Basic {access-token}"
+    }
 
 response = requests.request("GET", url, headers=headers)
 
@@ -124,6 +129,7 @@ func main() {
 	req, _ := http.NewRequest("GET", url, nil)
 
 	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", "Basic {access-token}")
 
 	res, _ := http.DefaultClient.Do(req)
 
@@ -150,6 +156,7 @@ xhr.addEventListener("readystatechange", function () {
 
 xhr.open("GET", "https://rest.p34.dk/v2/dk/phone/0");
 xhr.setRequestHeader("Accept", "application/json");
+xhr.setRequestHeader("Authorization", "Basic {access-token}");
 
 xhr.send(data);
 ```
@@ -158,6 +165,7 @@ xhr.send(data);
 var client = new RestClient("https://rest.p34.dk/v2/dk/phone/0");
 var request = new RestRequest(Method.GET);
 request.AddHeader("Accept", "application/json");
+request.AddHeader("Authorization", "Basic {access-token}");
 IRestResponse response = client.Execute(request);
 ```
 
@@ -174,6 +182,7 @@ http.verify_mode = OpenSSL::SSL::VERIFY_NONE
 
 request = Net::HTTP::Get.new(url)
 request["Accept"] = 'application/json'
+request["Authorization"] = 'Basic {access-token}'
 
 response = http.request(request)
 puts response.read_body
