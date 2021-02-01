@@ -1,6 +1,6 @@
 .PHONY: all
 
-all: clean dep patch build
+all: clean dep patch copyyaml build
 deploy: all deploy
 
 clean:
@@ -13,6 +13,9 @@ dep:
 
 patch:
 	patch ./node_modules/widdershins/lib/openapi3.js 0001-Add-basicAuth-auth-header-to-all-headers.-Fixes-353-.patch
+
+copyyaml:
+	cp api.yaml source/api.yaml
 
 build:
 	./node_modules/widdershins/widdershins.js --user_templates ./templates/openapi3/ --search false --httpsnippet --language_tabs 'shell:cURL' 'php:PHP:cURL' 'python:Python:requests' 'go:Go' 'javascript:JavaScript' 'csharp:C#' 'ruby:Ruby' --summary api.yaml -o source/index.html.md
