@@ -1,0 +1,1787 @@
+openapi: 3.0.0
+servers:
+  - url: https://rest.cvrapi.dk
+    description: Production
+info:
+  version: "2.0.0"
+  title: CVR API
+  description: |
+    You can only access this API with a username and password. To acquire that please fill out your contact information on the public website.
+
+    This API is only for paying customers.
+
+    ### Conventions
+      * Basic authentication
+      * Only understands HTTPS
+      * Only understands JSON
+
+    ### Changelog
+      * **2021-02-01**: Published documentation
+
+    ### Endpoints
+security:
+  - authentication: []
+tags:
+  - name: Company
+  - name: Subsidiary
+  - name: Participant
+  - name: Feeds
+paths:
+  /v2/{country}/company/{vat}:
+    summary: Returns a single company
+    description: This resource represents a single company in the system.
+    get:
+      summary: Find by VAT
+      description: Returns a single company
+      operationId: getCompanyById
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - name: vat
+          in: path
+          description: VAT
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Result
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Company
+  /v2/{country}/search/company:
+    summary: Returns a list of companies
+    description: This resource represents a list of companies in the system.
+    get:
+      summary: Search in companies
+      description: Returns a list of companies
+      operationId: searchCompany
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - $ref: '#/components/parameters/life_nameParam'
+        - $ref: '#/components/parameters/life_startParam'
+        - $ref: '#/components/parameters/life_endParam'
+        - $ref: '#/components/parameters/life_adprotectedParam'
+        - $ref: '#/components/parameters/address_streetParam'
+        - $ref: '#/components/parameters/address_streetcodeParam'
+        - $ref: '#/components/parameters/address_numberfromParam'
+        - $ref: '#/components/parameters/address_letterfromParam'
+        - $ref: '#/components/parameters/address_zipcodeParam'
+        - $ref: '#/components/parameters/address_zipcode_listParam'
+        - $ref: '#/components/parameters/address_cityParam'
+        - $ref: '#/components/parameters/address_municipalityParam'
+        - $ref: '#/components/parameters/companyform_codeParam'
+        - $ref: '#/components/parameters/companyform_descriptionParam'
+        - $ref: '#/components/parameters/companyform_holdingParam'
+        - $ref: '#/components/parameters/companystatus_codeParam'
+        - $ref: '#/components/parameters/contact_phoneParam'
+        - $ref: '#/components/parameters/contact_emailParam'
+        - $ref: '#/components/parameters/contact_wwwParam'
+        - $ref: '#/components/parameters/status_bankruptParam'
+        - $ref: '#/components/parameters/industry_primary_textParam'
+        - $ref: '#/components/parameters/industry_primary_codeParam'
+        - $ref: '#/components/parameters/industry_secondary_textParam'
+        - $ref: '#/components/parameters/industry_secondary_codeParam'
+        - $ref: '#/components/parameters/capital_capitalParam'
+        - $ref: '#/components/parameters/capital_currencyParam'
+        - $ref: '#/components/parameters/capital_ipoParam'
+        - $ref: '#/components/parameters/employment_amountParam'
+        - $ref: '#/components/parameters/employment_interval_lowParam'
+        - $ref: '#/components/parameters/info_ean_idParam'
+        - $ref: '#/components/parameters/info_lei_idParam'
+      responses:
+        '200':
+          description: Results
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Company
+  /v2/{country}/suggestions/company/{name}:
+    summary: Returns a list of companies
+    description: This resource represents a list of companies in the system.
+    get:
+      summary: Suggest companies by name
+      description: Returns a list of companies
+      operationId: suggestionsCompany
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - name: name
+          in: path
+          description: Name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Results
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Company
+  /v2/{country}/subsidiary/{subsidiarynumber}:
+    summary: Returns a single subsidiary
+    description: This resource represents a single subsidiary in the system.
+    get:
+      summary: Find by subsidiarynumber
+      description: Returns a single subsidiary
+      operationId: getSubsidiaryById
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - name: subsidiarynumber
+          in: path
+          description: Subsidiarynumber
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Result
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subsidiary'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Subsidiary
+  /v2/{country}/search/subsidiary:
+    summary: Returns a list of subsidiaries
+    description: This resource represents a list of subsidiaries in the system.
+    get:
+      summary: Search in subsidiaries
+      description: Returns a list of subsidiaries
+      operationId: searchSubsidiary
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - $ref: '#/components/parameters/life_nameParam'
+        - $ref: '#/components/parameters/life_startParam'
+        - $ref: '#/components/parameters/life_endParam'
+        - $ref: '#/components/parameters/life_adprotectedParam'
+        - $ref: '#/components/parameters/address_streetParam'
+        - $ref: '#/components/parameters/address_streetcodeParam'
+        - $ref: '#/components/parameters/address_numberfromParam'
+        - $ref: '#/components/parameters/address_letterfromParam'
+        - $ref: '#/components/parameters/address_zipcodeParam'
+        - $ref: '#/components/parameters/address_zipcode_listParam'
+        - $ref: '#/components/parameters/address_cityParam'
+        - $ref: '#/components/parameters/address_municipalityParam'
+        - $ref: '#/components/parameters/contact_phoneParam'
+        - $ref: '#/components/parameters/contact_emailParam'
+        - $ref: '#/components/parameters/contact_wwwParam'
+        - $ref: '#/components/parameters/industry_primary_textParam'
+        - $ref: '#/components/parameters/industry_primary_codeParam'
+        - $ref: '#/components/parameters/industry_secondary_textParam'
+        - $ref: '#/components/parameters/industry_secondary_codeParam'
+        - $ref: '#/components/parameters/employment_amountParam'
+        - $ref: '#/components/parameters/employment_interval_lowParam'
+      responses:
+        '200':
+          description: Results
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subsidiary'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Subsidiary
+  /v2/{country}/suggestions/subsidiary/{name}:
+    summary: Returns a list of subsidiaries
+    description: This resource represents a list of subsidiaries in the system.
+    get:
+      summary: Suggest subsidiaries by name
+      description: Returns a list of subsidiaries
+      operationId: suggestionsSubsidiary
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - name: name
+          in: path
+          description: Name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Results
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subsidiary'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Subsidiary
+  /v2/{country}/participant/{participantnumber}:
+    summary: Returns a single participant
+    description: This resource represents a single participant in the system.
+    get:
+      summary: Find by participantnumber
+      description: Returns a single participant
+      operationId: getParticipantById
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - name: participantnumber
+          in: path
+          description: participantnumber
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Result
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Participant
+  /v2/{country}/search/participant:
+    summary: Returns a list of participants
+    description: This resource represents a list of participants in the system.
+    get:
+      summary: Search in participants
+      description: Returns a list of participants
+      operationId: searchParticipant
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - $ref: '#/components/parameters/life_nameParam'
+        - $ref: '#/components/parameters/life_deceasedParam'
+        - $ref: '#/components/parameters/address_streetParam'
+        - $ref: '#/components/parameters/address_streetcodeParam'
+        - $ref: '#/components/parameters/address_numberfromParam'
+        - $ref: '#/components/parameters/address_letterfromParam'
+        - $ref: '#/components/parameters/address_zipcodeParam'
+        - $ref: '#/components/parameters/address_zipcode_listParam'
+        - $ref: '#/components/parameters/address_cityParam'
+        - $ref: '#/components/parameters/address_municipalityParam'
+        - $ref: '#/components/parameters/contact_phoneParam'
+        - $ref: '#/components/parameters/contact_emailParam'
+        - $ref: '#/components/parameters/contact_wwwParam'
+      responses:
+        '200':
+          description: Results
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Participant
+  /v2/{country}/suggestions/participant/{name}:
+    summary: Returns a list of participants
+    description: This resource represents a list of participants in the system.
+    get:
+      summary: Suggest participants by name
+      description: Returns a list of participants
+      operationId: suggestionsParticipant
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - name: name
+          in: path
+          description: Name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Results
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Participant'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Participant
+  /v2/{country}/changed/company/{date-time}:
+    summary: Returns a list of VAT and last changed date.
+    description: This resource represents a list of VAT and last changed date.
+    get:
+      summary: A list of VAT and last changed date.
+      description: Returns a list of VAT and last changed date.
+      operationId: companyChanged
+      parameters:
+        - name: country
+          in: path
+          description: Country
+          required: true
+          schema:
+            enum: [dk, no]
+            type: string
+        - name: date-time
+          in: path
+          description: An ISO 8601 date and time.
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: Results
+          headers:
+            'Access-Control-Allow-Origin':
+              $ref: '#/components/headers/Access-Control-Allow-Origin'
+            'Access-Control-Allow-Methods':
+              $ref: '#/components/headers/Access-Control-Allow-Methods'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyChangedFeed'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '403':
+           $ref: '#/components/responses/ForbiddenError'
+        '404':
+          description: Not found
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - Feeds
+components:
+  securitySchemes:
+    authentication:
+      type: http
+      scheme: basic
+      description: The provided token is the username and password is empty.
+  schemas:
+    Company:
+      type: object
+      properties:
+        vat:
+           type: integer
+           format: int64
+           description: VAT
+        slug:
+           type: string
+           description: Slug
+        address:
+           $ref: '#/components/schemas/Address'
+        companyform:
+           $ref: '#/components/schemas/Companyform'
+        companystatus:
+           $ref: '#/components/schemas/Companystatus'
+        contact:
+           $ref: '#/components/schemas/Contact'
+        status:
+           $ref: '#/components/schemas/Status'
+        industry:
+           $ref: '#/components/schemas/Industry'
+        life:
+           $ref: '#/components/schemas/Life'
+        accounting:
+           $ref: '#/components/schemas/Accounting'
+        info:
+           $ref: '#/components/schemas/Info'
+        secondarynames:
+           $ref: '#/components/schemas/Secondarynames'
+        subsidiaries:
+           $ref: '#/components/schemas/Subsidiaries'
+        employment:
+           $ref: '#/components/schemas/Employment'
+        participants:
+           $ref: '#/components/schemas/Participants'
+        participations:
+           $ref: '#/components/schemas/Participations'
+    Subsidiary:
+      type: object
+      properties:
+        subsidiarynumber:
+           type: integer
+           format: int64
+           description: Subsidiarynumber
+        vat:
+           type: integer
+           format: int64
+           description: VAT
+        slug:
+           type: string
+           description: Slug
+        address:
+           $ref: '#/components/schemas/Address'
+        contact:
+           $ref: '#/components/schemas/Contact'
+        industry:
+           $ref: '#/components/schemas/Industry'
+        life:
+          allOf:
+            - $ref: '#/components/schemas/Life'
+            - type: object
+              properties:
+                main:
+                  type: boolean
+                  description: If this is the main subsidiary
+    Participant:
+      type: object
+      properties:
+        participantnumber:
+           type: integer
+           format: int64
+           description: Participantnumber
+        slug:
+           type: string
+           description: Slug
+        address:
+          allOf:
+            - $ref: '#/components/schemas/Address'
+            - type: object
+              properties:
+                 unlisted:
+                   type: boolean
+                   description: If this participants address is unlisted (hidden/secret)
+        contact:
+           $ref: '#/components/schemas/Contact'
+        life:
+           $ref: '#/components/schemas/ParticipantLife'
+    Address:
+      type: object
+      properties:
+        street:
+           type: string
+           nullable: true
+           description: Street name
+        streetcode:
+           type: integer
+           format: int64
+           nullable: true
+           description: Unique street code
+        numberfrom:
+           type: string
+           nullable: true
+           description: House number from
+        numberto:
+           type: string
+           nullable: true
+           description: House number to
+        letterfrom:
+           type: string
+           nullable: true
+           description: House letter from
+        letterto:
+           type: string
+           nullable: true
+           description: House letter to
+        floor:
+           type: string
+           nullable: true
+           description: Floor in building
+        door:
+           type: string
+           nullable: true
+           description: Door in building
+        zipcode:
+           type: integer
+           format: int64
+           nullable: true
+           description: Zipcode
+        cityname:
+           type: string
+           nullable: true
+           description: City
+        altcityname:
+           type: string
+           nullable: true
+           description: Place name
+        countrycode:
+           type: string
+           nullable: true
+           description: Country code
+        coname:
+           type: string
+           nullable: true
+           description: Care of
+        freetext:
+           type: string
+           nullable: true
+           description: An address written when not matched
+        municipalitycode:
+           type: integer
+           format: int64
+           nullable: true
+           description: Municipality code
+        municipalityname:
+           type: string
+           nullable: true
+           description: Municipality name
+        mailbox:
+           type: string
+           nullable: true
+           description: Mailbox
+        kvh:
+           type: string
+           nullable: true
+           description: Danish KVH code
+        kvhx:
+           type: string
+           nullable: true
+           description: Danish KVHX code
+        longitude:
+           type: number
+           format: float
+           nullable: true
+           description: WGS84 longitude
+        latitude:
+           type: number
+           format: float
+           nullable: true
+           description: WGS84 latitude
+        addressid:
+           type: string
+           nullable: true
+           description: Danish address id in DAWA
+        start:
+           type: string
+           format: date
+           nullable: true
+           description: Start date for this address
+        end:
+           type: string
+           format: date
+           nullable: true
+           description: End date for this address
+        timestamp:
+           type: string
+           format: date
+           nullable: true
+           description: Date this address was registred
+    Companyform:
+      type: object
+      properties:
+        code:
+           type: integer
+           format: int64
+           nullable: true
+           enum: [10, 15, 20, 30, 40, 45, 50, 60, 70, 80, 81, 90, 95, 100, 110, 115, 130, 140, 150, 151, 152, 160, 170, 180, 190, 195, 210, 220, 230, 235, 240, 245, 250, 260, 270, 280, 285, 290, 291, 520, 990]
+           description: Company form code
+        description:
+           type: string
+           nullable: true
+           enum: [A/S, ABA, AMT, ANS, APS, DØD, E/S, EFO, ENK, EUO, EØF, FAP, FAS, FBA, FES, FEØ, FFO, FIV, FKI, FMA, FON, FOR, GUS, I/S, IVS, K/S, KAS, KOM, MSS, PAR, PMV, REG, SCE, SMA, SOV, STA, TRU, UDL, UOP, ØVR]
+           description: Company form description
+        longdescription:
+           type: string
+           nullable: true
+           description: Company form longer description fx. aktieselskab
+        holding:
+           type: boolean
+           description: If this company is a holding company
+    Companystatus:
+      type: object
+      properties:
+        text:
+           type: string
+           nullable: true
+           enum: [AKTIV, NORMAL, OPLØST, OPLØST EFTER ERKLÆRING, OPLØST EFTER FRIVILLIG LIKVIDATION, OPLØST EFTER FUSION, OPLØST EFTER KONKURS, OPLØST EFTER SPALTNING, SLETTES, SLETTET, TVANGSOPLØST, UDEN RETSVIRKNING, UNDER FRIVILLIG LIKVIDATION, UNDER KONKURS, UNDER REASSUMERING, UNDER REASUMMERING, UNDER REKONSTRUKTION, UNDER TVANGSOPLØSNING, OPHØRT, OPLØST EFTER GRÆNSEOVERSKRIDENDE HJEMSTEDSFLYTNING, OPLØST VED ERKLÆRING, OPLØST EFTER GRÆNSEOVERSKRIDENDE FUSION]
+           description: Company status text
+        start:
+           type: string
+           format: date
+           nullable: true
+           description: Start date for this status
+    Contact:
+      type: object
+      properties:
+        email:
+           type: string
+           nullable: true
+           description: E-mail
+        www:
+           type: string
+           nullable: true
+           description: Website
+        phone:
+           type: string
+           nullable: true
+           description: Phone number
+    Status:
+      type: object
+      properties:
+        code:
+           type: integer
+           format: int64
+           nullable: true
+           enum: [1, 2, 3, 4, 5, 6, 8, 9]
+           description: Status code
+        creditcode:
+           type: integer
+           format: int64
+           nullable: true
+           enum: [1, 3]
+           description: Credit status code
+        start:
+           type: string
+           format: date
+           nullable: true
+           description: Start date and time for this status
+        end:
+           type: string
+           format: date
+           nullable: true
+           description: End date and time for this status
+        bankrupt:
+           type: boolean
+           description: If this company is a bankrupt
+    Industry:
+      type: object
+      properties:
+        primary:
+          type: object
+          properties:
+            code:
+               type: integer
+               format: int64
+               nullable: true
+               description: Industry code
+            text:
+               type: string
+               nullable: true
+               description: Industry text
+        secondary:
+          type: array
+          items:
+            type: object
+            properties:
+              sequence:
+                 type: integer
+                 format: int64
+                 nullable: true
+                 description: The sequence number
+              code:
+                 type: integer
+                 format: int64
+                 description: Industry code
+              text:
+                 type: string
+                 description: Industry text
+    Life:
+      type: object
+      properties:
+        start:
+           type: string
+           format: date
+           nullable: true
+           description: Start date
+        end:
+           type: string
+           format: date
+           nullable: true
+           description: End date
+        name:
+           type: string
+           description: Company name
+        adprotected:
+           type: boolean
+           description: If this company is legally protected against unsolicited advertising
+    Accounting:
+      type: object
+      properties:
+        period_start:
+           type: string
+           nullable: true
+           description: Starting period for this companies fiscal year
+        period_end:
+           type: string
+           format: date
+           nullable: true
+           description: End period for this companies fiscal year
+        first_period_start:
+           type: string
+           format: date
+           nullable: true
+           description: First period start
+        first_period_end:
+           type: string
+           format: date
+           nullable: true
+           description: First period end
+        restructuring_period_start:
+           type: string
+           format: date
+           nullable: true
+           description: Restructuring period start
+        restructuring_period_end:
+           type: string
+           format: date
+           nullable: true
+           description: Restructuring period end
+        revision:
+           type: boolean
+           description: If this company is being audited
+        documents:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              url:
+                 type: string
+                 description: Direct URL to report
+              type:
+                 type: string
+                 description: The type of the report
+              start:
+                 type: string
+                 format: date
+                 description: Period start date
+              end:
+                 type: string
+                 format: date
+                 description: Period end date
+              publicdate:
+                 type: string
+                 format: date
+                 description: The date the report was published
+              updated:
+                 type: string
+                 format: date
+                 nullable: true
+                 description: The date the report was updated
+              currency:
+                 type: string
+                 description: The currency in ISO 4217 format
+              summary:
+                type: object
+                properties:
+                  revenue:
+                     type: number
+                     format: float
+                     nullable: true
+                  grossprofitloss:
+                     type: number
+                     format: float
+                     nullable: true
+                  employeebenefitsexpense:
+                     type: number
+                     format: float
+                     nullable: true
+                  depreciationamortisationexpenseprofitorloss:
+                     type: number
+                     format: float
+                     nullable: true
+                  profitlossfromordinaryoperatingactivities:
+                     type: number
+                     format: float
+                     nullable: true
+                  incomefrominvestmentsingroupenterprises:
+                     type: number
+                     format: float
+                     nullable: true
+                  otherfinanceincome:
+                     type: number
+                     format: float
+                     nullable: true
+                  otherfinanceexpenses:
+                     type: number
+                     format: float
+                     nullable: true
+                  profitlossfromordinaryactivitiesbeforetax:
+                     type: number
+                     format: float
+                     nullable: true
+                  taxexpenseonordinaryactivities:
+                     type: number
+                     format: float
+                     nullable: true
+                  taxexpense:
+                     type: number
+                     format: float
+                     nullable: true
+                  profitloss:
+                     type: number
+                     format: float
+                     nullable: true
+                  equity:
+                     type: number
+                     format: float
+                     nullable: true
+                  assets:
+                     type: number
+                     format: float
+                     nullable: true
+                  proposeddividendrecognisedinequity:
+                     type: number
+                     format: float
+                     nullable: true
+                  proposeddividend:
+                     type: number
+                     format: float
+                     nullable: true
+                  dividend:
+                     type: number
+                     format: float
+                     nullable: true
+                  noncurrentassets:
+                     type: number
+                     format: float
+                     nullable: true
+                  landandbuildings:
+                     type: number
+                     format: float
+                     nullable: true
+                  currentassets:
+                     type: number
+                     format: float
+                     nullable: true
+                  inventories:
+                     type: number
+                     format: float
+                     nullable: true
+                  shorttermtradereceivables:
+                     type: number
+                     format: float
+                     nullable: true
+                  cashandcashequivalents:
+                     type: number
+                     format: float
+                     nullable: true
+                  equityloan:
+                     type: number
+                     format: float
+                     nullable: true
+                  provisions:
+                     type: number
+                     format: float
+                     nullable: true
+                  longtermliabilitiesotherthanprovisions:
+                     type: number
+                     format: float
+                     nullable: true
+                  shorttermliabilitiesotherthanprovisions:
+                     type: number
+                     format: float
+                     nullable: true
+                  liabilitiesandequity:
+                     type: number
+                     format: float
+                     nullable: true
+                  coverage:
+                     type: number
+                     format: float
+                     nullable: true
+                  operatingmargin:
+                     type: number
+                     format: float
+                     nullable: true
+                  roi:
+                     type: number
+                     format: float
+                     nullable: true
+                  liquidityratio:
+                     type: number
+                     format: float
+                     nullable: true
+                  solvencyratio:
+                     type: number
+                     format: float
+                     nullable: true
+                  equityreturn:
+                     type: number
+                     format: float
+                     nullable: true
+                  averagenumberofemployees:
+                     type: number
+                     format: float
+                     nullable: true
+        tax:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              year:
+                 type: integer
+                 format: int64
+                 description: Year
+              tradeid:
+                 type: integer
+                 format: int64
+                 description: The companies own VAT
+              managementvat:
+                 type: integer
+                 format: int64
+                 nullable: true
+                 description: The mother VAT
+              companytype:
+                 type: string
+                 enum: [Administrationsselskab, Datterselskab, Enkeltstående selskab]
+                 description: The type the company was under when the company paid tax
+              taxlaw:
+                 type: string
+                 nullable: true
+                 description: The law this company paid tax under
+              taxableincome:
+                 type: integer
+                 format: float
+                 nullable: true
+                 description: The income the company is being tax of
+              deficit:
+                 type: integer
+                 format: float
+                 nullable: true
+                 description: The deficit the company has reported (tax break)
+              paidtax:
+                 type: integer
+                 format: float
+                 nullable: true
+                 description: The amount of tax the company paid
+    Info:
+      type: object
+      properties:
+        capital_amount:
+           type: number
+           format: float
+           nullable: true
+           description: Capital amount
+        capital_currency:
+           type: string
+           nullable: true
+           description: The currency in ISO 4217 format
+        capital_partial:
+           type: boolean
+           description: If the capital is partially paid
+        capital_ipo:
+           type: boolean
+           description: If the company is traded publicly
+        shareholder_below_5_percent:
+           type: boolean
+           description: If the company has reported that there is no ownership over 5%
+        shareholder_public:
+           type: boolean
+           description: If the register of shareholders is public
+        articles_of_association:
+           type: string
+           format: date
+           nullable: true
+           description: Latest articles of association
+        purpose:
+           type: string
+           nullable: true
+           description: The purpose
+        bind:
+           type: string
+           nullable: true
+           description: The power og bind
+        modes_legislation_money_laundering:
+           type: boolean
+           description: If the company has to act according to anti money laundering laws
+        modes_social_economic:
+           type: boolean
+           description: If the company is an social economic company
+        modes_government:
+           type: boolean
+           description: If the company is government or state company
+        lei_id:
+           type: string
+           nullable: true
+           description: The LEI code
+        demerges:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              start:
+                 type: string
+                 format: date
+                 description: Period start date
+              end:
+                 type: string
+                 format: date
+                 description: Period end date
+              ingoing:
+                type: array
+                nullable: true
+                items:
+                  type: object
+                  properties:
+                    vat:
+                       type: integer
+                       format: int64
+                       description: VAT
+                    slug:
+                       type: string
+                       description: Slug
+                    life:
+                       type: object
+                       properties:
+                          start:
+                             type: string
+                             format: date
+                             description: Start date
+                          end:
+                             type: string
+                             format: date
+                             description: End date
+                          name:
+                             type: string
+                             description: Company name
+                          adprotected:
+                             type: boolean
+                             description: If this company is legally protected against unsolicited advertising
+              outgoing:
+                type: array
+                nullable: true
+                items:
+                  type: object
+                  properties:
+                    vat:
+                       type: integer
+                       format: int64
+                       description: VAT
+                    slug:
+                       type: string
+                       description: Slug
+                    life:
+                       type: object
+                       properties:
+                          start:
+                             type: string
+                             format: date
+                             description: Start date
+                          end:
+                             type: string
+                             format: date
+                             description: End date
+                          name:
+                             type: string
+                             description: Company name
+                          adprotected:
+                             type: boolean
+                             description: If this company is legally protected against unsolicited advertising
+        merges:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              start:
+                 type: string
+                 format: date
+                 description: Period start date
+              end:
+                 type: string
+                 format: date
+                 description: Period end date
+              outgoing:
+                type: array
+                nullable: true
+                items:
+                  type: object
+                  properties:
+                    vat:
+                       type: integer
+                       format: int64
+                       description: VAT
+                    slug:
+                       type: string
+                       description: Slug
+                    life:
+                       type: object
+                       properties:
+                          start:
+                             type: string
+                             format: date
+                             description: Start date
+                          end:
+                             type: string
+                             format: date
+                             description: End date
+                          name:
+                             type: string
+                             description: Company name
+                          adprotected:
+                             type: boolean
+                             description: If this company is legally protected against unsolicited advertising
+        ean:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              id:
+                 type: integer
+                 format: int64
+                 description: EAN number
+              name:
+                 type: string
+                 description: Company name
+    Secondarynames:
+      type: array
+      nullable: true
+      items:
+        type: string
+    Subsidiaries:
+      type: array
+      nullable: true
+      items:
+        type: object
+        properties:
+          subsidiarynumber:
+             type: integer
+             format: int64
+             description: Subsidiarynumber
+          vat:
+             type: integer
+             format: int64
+             description: VAT
+          slug:
+             type: string
+             description: Slug
+          address:
+             $ref: '#/components/schemas/Address'
+          life:
+            allOf:
+              - $ref: '#/components/schemas/Life'
+              - type: object
+                properties:
+                   main:
+                     type: boolean
+                     description: If this is the main subsidiary
+    Employment:
+      type: array
+      nullable: true
+      items:
+        type: object
+        properties:
+          months:
+            type: array
+            nullable: true
+            items:
+              type: object
+              allOf:
+                - $ref: '#/components/schemas/EmploymentObject'
+                - type: object
+                  properties:
+                    year:
+                       type: integer
+                       format: int64
+                       description: Year
+                    month:
+                       type: integer
+                       format: int64
+                       description: Month
+          quarters:
+            type: array
+            nullable: true
+            items:
+              type: object
+              allOf:
+                - $ref: '#/components/schemas/EmploymentObject'
+                - type: object
+                  properties:
+                    year:
+                       type: integer
+                       format: int64
+                       description: Year
+                    quarter:
+                       type: integer
+                       format: int64
+                       description: Quarter
+          years:
+            type: array
+            nullable: true
+            items:
+              type: object
+              allOf:
+                - $ref: '#/components/schemas/EmploymentObject'
+                - type: object
+                  properties:
+                    year:
+                       type: integer
+                       format: int64
+                       description: Year
+    EmploymentObject:
+      type: object
+      properties:
+        amount:
+           type: integer
+           format: int64
+           nullable: true
+           description: Precise amount employeed
+        amount_fte:
+           type: integer
+           format: int64
+           nullable: true
+           description: Precise amount employeed full-time equivalents
+        interval_low:
+           type: integer
+           format: int64
+           nullable: true
+           description: Minimum employeed in interval
+        interval_high:
+           type: integer
+           format: int64
+           nullable: true
+           description: Maximum employeed in interval
+        interval_low_fte:
+           type: integer
+           format: int64
+           nullable: true
+           description: Minimum employeed full-time equivalents in interval
+        interval_high_fte:
+           type: integer
+           format: int64
+           nullable: true
+           description: Minimum employeed full-time equivalents in interval
+    Participants:
+      type: array
+      nullable: true
+      items:
+        type: object
+        properties:
+          participantnumber:
+             type: integer
+             format: int64
+             description: Participant number
+          vat:
+             type: integer
+             format: int64
+             description: VAT
+          slug:
+             type: string
+             description: Slug
+          address:
+            allOf:
+              - $ref: '#/components/schemas/Address'
+              - type: object
+                properties:
+                   unlisted:
+                     type: boolean
+                     description: If this participants address is unlisted (hidden/secret)
+          life:
+            $ref: '#/components/schemas/ParticipantLife'
+          roles:
+            $ref: '#/components/schemas/ParticipantRoles'
+    Participations:
+      type: array
+      nullable: true
+      items:
+        type: object
+        properties:
+          vat:
+             type: integer
+             format: int64
+             description: VAT
+          slug:
+             type: string
+             description: Slug
+          companyform:
+            $ref: '#/components/schemas/Companyform'
+          companystatus:
+            $ref: '#/components/schemas/Companystatus'
+          life:
+            $ref: '#/components/schemas/Life'
+          roles:
+            $ref: '#/components/schemas/ParticipantRoles'
+    ParticipantRoles:
+      type: object
+      properties:
+        type:
+           type: string
+           enum: [accountant, board, branch_manager, daily_management, director, founder, fully_responsible_participant, liquidator, owner, real_owner, supervisory_board]
+           description: The roles type
+        life:
+          type: object
+          properties:
+            start:
+               type: string
+               format: date
+               description: Period start date
+            end:
+               type: string
+               format: date
+               description: Period end date
+            title:
+               type: string
+               description: The title of the role
+
+            election_format:
+               type: string
+               description: Election format
+            owner_capital_classes:
+               type: string
+               description: Capital classes fx. A or B
+            owner_percent:
+               type: number
+               format: float
+               description: The ownership share
+            owner_voting_percent:
+               type: number
+               format: float
+               description: The voting share
+            special_ownership:
+               type: string
+               description: If there is a special ownership
+            special_ownership_description:
+               type: string
+               description: Description of the special ownership
+            substitute_member_for_id:
+               type: integer
+               format: int64
+               description: The participantnumber of the substitute
+            substitute_member_for_name:
+               type: string
+               description: The name of the substitute participant
+    ParticipantLife:
+      type: object
+      properties:
+        name:
+           type: string
+           nullable: true
+           description: Participant name
+        profession:
+           type: string
+           nullable: true
+           description: Participants profession
+        deceased:
+           type: boolean
+           description: If this participant is deceased
+    CompanyChangedFeed:
+      type: object
+      properties:
+        vat:
+           type: integer
+           format: int64
+           description: VAT
+        lastupdate:
+          type: object
+          properties:
+            datetime:
+              type: string
+              format: date-time
+              description: Date and time in ISO 8601.
+            unix:
+              type: integer
+              format: int64
+    Error:
+      type: object
+      properties:
+        error:
+           type: string
+           enum: [INTERNAL_ERROR, INVALID_UA, METHOD_NOT_IMPLEMENTED, QUOTA_EXCEEDED]
+           description: Error code
+        message:
+           type: string
+           description: Message that gives more information on the error
+  parameters:
+    life_nameParam:
+      in: query
+      name: life_name
+      schema:
+        type: string
+    life_startParam:
+      in: query
+      name: life_start
+      schema:
+        type: string
+        format: date
+    life_endParam:
+      in: query
+      name: life_end
+      schema:
+        type: string
+        format: date
+    life_adprotectedParam:
+      in: query
+      name: life_adprotected
+      schema:
+        type: boolean
+    life_deceasedParam:
+      in: query
+      name: life_deceased
+      schema:
+        type: boolean
+    address_streetParam:
+      in: query
+      name: address_street
+      schema:
+        type: string
+    address_streetcodeParam:
+      in: query
+      name: address_streetcode
+      schema:
+        type: integer
+        format: int64
+    address_numberfromParam:
+      in: query
+      name: address_numberfrom
+      schema:
+        type: string
+    address_letterfromParam:
+      in: query
+      name: address_letterfrom
+      schema:
+        type: string
+    address_zipcodeParam:
+      in: query
+      name: address_zipcode
+      schema:
+        type: integer
+        format: int64
+    address_zipcode_listParam:
+      in: query
+      name: address_zipcode_list
+      schema:
+        type: string
+    address_cityParam:
+      in: query
+      name: address_city
+      schema:
+        type: string
+    address_municipalityParam:
+      in: query
+      name: address_municipality
+      schema:
+        type: integer
+        format: int64
+    companyform_codeParam:
+      in: query
+      name: companyform_code
+      schema:
+        type: integer
+        format: int64
+    companyform_descriptionParam:
+      in: query
+      name: companyform_description
+      schema:
+        type: string
+    companyform_holdingParam:
+      in: query
+      name: companyform_holding
+      schema:
+        type: boolean
+    companystatus_codeParam:
+      in: query
+      name: companystatus_code
+      schema:
+        type: integer
+        format: int64
+    contact_phoneParam:
+      in: query
+      name: contact_phone
+      schema:
+        type: string
+    contact_emailParam:
+      in: query
+      name: contact_email
+      schema:
+        type: string
+    contact_wwwParam:
+      in: query
+      name: contact_www
+      schema:
+        type: string
+    status_bankruptParam:
+      in: query
+      name: status_bankrupt
+      schema:
+        type: boolean
+    industry_primary_textParam:
+      in: query
+      name: industry_primary_text
+      schema:
+        type: string
+    industry_primary_codeParam:
+      in: query
+      name: industry_primary_code
+      schema:
+        type: integer
+        format: int64
+    industry_secondary_textParam:
+      in: query
+      name: industry_secondary_text
+      schema:
+        type: string
+    industry_secondary_codeParam:
+      in: query
+      name: industry_secondary_code
+      schema:
+        type: integer
+        format: int64
+    capital_capitalParam:
+      in: query
+      name: capital_capital
+      schema:
+        type: string
+    capital_currencyParam:
+      in: query
+      name: capital_currency
+      schema:
+        type: string
+    capital_ipoParam:
+      in: query
+      name: capital_ipo
+      schema:
+        type: boolean
+    employment_amountParam:
+      in: query
+      name: employment_amount
+      schema:
+        type: string
+    employment_interval_lowParam:
+      in: query
+      name: employment_interval_low
+      schema:
+        type: string
+    info_ean_idParam:
+      in: query
+      name: info_ean_id
+      schema:
+        type: string
+    info_lei_idParam:
+      in: query
+      name: info_lei_id
+      schema:
+        type: string
+    fromParam:
+      in: query
+      name: from
+      description: Go to next page. 10 = the next 10 results.
+      schema:
+        type: string
+  headers:
+    Access-Control-Allow-Origin:
+      schema:
+        type: string
+      description: Origin allowed
+    Access-Control-Allow-Methods:
+      schema:
+        type: string
+      description: Origin method allowed
+  responses:
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+    ForbiddenError:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotImplementedError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
