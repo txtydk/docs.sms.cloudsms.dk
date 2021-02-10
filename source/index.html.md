@@ -403,12 +403,72 @@ Returns a list of companies
 |info_ean_id|query|string|false|none|
 |info_lei_id|query|string|false|none|
 
+#### Detailed descriptions
+
+**companystatus_code**: 
+`3` - OPLØST
+
+`4` - OPLØST EFTER ERKLÆRING
+
+`5` - OPLØST EFTER FRIVILLIG LIKVIDATION
+
+`6` - OPLØST EFTER FUSION
+
+`7` - OPLØST EFTER KONKURS
+
+`8` - OPLØST EFTER SPALTNING
+
+`10` - SLETTET
+
+`11` - TVANGSOPLØST
+
+`12` - UDEN RETSVIRKNING
+
+`13` - UNDER FRIVILLIG LIKVIDATION
+
+`14` - UNDER KONKURS
+
+`15` - UNDER REASSUMERING
+
+`17` - UNDER REKONSTRUKTION
+
+`18` - UNDER TVANGSOPLØSNING
+
+`19` - OPHØRT
+
+`20` - I DRIFT
+
+`21` - OPLØST EFTER GRÆNSEOVERSKRIDENDE HJEMSTEDSFLYTNING
+
+`23` - OPLØST EFTER GRÆNSEOVERSKRIDENDE FUSION
+
+`24` - LUKKET
+
 #### Enumerated Values
 
 |Parameter|Value|
 |---|---|
 |country|dk|
 |country|no|
+|companystatus_code|3|
+|companystatus_code|4|
+|companystatus_code|5|
+|companystatus_code|6|
+|companystatus_code|7|
+|companystatus_code|8|
+|companystatus_code|10|
+|companystatus_code|11|
+|companystatus_code|12|
+|companystatus_code|13|
+|companystatus_code|14|
+|companystatus_code|15|
+|companystatus_code|17|
+|companystatus_code|18|
+|companystatus_code|19|
+|companystatus_code|20|
+|companystatus_code|21|
+|companystatus_code|23|
+|companystatus_code|24|
 
 <h3 id="search-in-companies-responses">Responses</h3>
 
