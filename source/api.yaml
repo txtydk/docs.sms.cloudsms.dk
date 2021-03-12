@@ -1663,9 +1663,49 @@ components:
     companystatus_codeParam:
       in: query
       name: companystatus_code
+      description: |
+
+        `3` - OPLØST
+
+        `4` - OPLØST EFTER ERKLÆRING
+
+        `5` - OPLØST EFTER FRIVILLIG LIKVIDATION
+
+        `6` - OPLØST EFTER FUSION
+
+        `7` - OPLØST EFTER KONKURS
+
+        `8` - OPLØST EFTER SPALTNING
+
+        `10` - SLETTET
+
+        `11` - TVANGSOPLØST
+
+        `12` - UDEN RETSVIRKNING
+
+        `13` - UNDER FRIVILLIG LIKVIDATION
+
+        `14` - UNDER KONKURS
+
+        `15` - UNDER REASSUMERING
+
+        `17` - UNDER REKONSTRUKTION
+
+        `18` - UNDER TVANGSOPLØSNING
+
+        `19` - OPHØRT
+
+        `20` - I DRIFT
+
+        `21` - OPLØST EFTER GRÆNSEOVERSKRIDENDE HJEMSTEDSFLYTNING
+
+        `23` - OPLØST EFTER GRÆNSEOVERSKRIDENDE FUSION
+
+        `24` - LUKKET
       schema:
         type: integer
         format: int64
+        enum: [3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 24]
     contact_phoneParam:
       in: query
       name: contact_phone
