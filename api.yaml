@@ -1149,6 +1149,9 @@ components:
         capital_partial:
            type: boolean
            description: If the capital is partially paid
+        capital_classes:
+           type: boolean
+           description: If the capital is decided into classes
         capital_ipo:
            type: boolean
            description: If the company is traded publicly

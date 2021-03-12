@@ -2094,6 +2094,7 @@ authentication
     "capital_amount": 0,
     "capital_currency": "string",
     "capital_partial": true,
+    "capital_classes": true,
     "capital_ipo": true,
     "shareholder_below_5_percent": true,
     "shareholder_public": true,
@@ -3058,6 +3059,7 @@ continued
   "capital_amount": 0,
   "capital_currency": "string",
   "capital_partial": true,
+  "capital_classes": true,
   "capital_ipo": true,
   "shareholder_below_5_percent": true,
   "shareholder_public": true,
@@ -3133,6 +3135,7 @@ continued
 |capital_amount|number(float)¦null|Capital amount|
 |capital_currency|string¦null|The currency in ISO 4217 format|
 |capital_partial|boolean|If the capital is partially paid|
+|capital_classes|boolean|If the capital is decided into classes|
 |capital_ipo|boolean|If the company is traded publicly|
 |shareholder_below_5_percent|boolean|If the company has reported that there is no ownership over 5%|
 |shareholder_public|boolean|If the register of shareholders is public|
