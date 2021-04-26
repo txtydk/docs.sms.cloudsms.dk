@@ -1902,7 +1902,7 @@ puts response.read_body
 
 `GET /v2/{country}/changed/company/{change_id}`
 
-Returns a list of VAT and last changed date.
+Returns a list of VAT and last changed date
 
 <h3 id="a-list-of-vat-and-last-changed-date.-parameters">Parameters</h3>
 

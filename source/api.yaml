@@ -507,7 +507,7 @@ paths:
     description: This resource represents a list of VAT and last changed date.
     get:
       summary: A list of VAT and last changed date.
-      description: Returns a list of VAT and last changed date.
+      description: Returns a list of VAT and last changed date
       operationId: companyChanged
       parameters:
         - name: country
