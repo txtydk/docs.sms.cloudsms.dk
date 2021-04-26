@@ -16,6 +16,7 @@ info:
       * Only understands JSON
 
     ### Changelog
+      * **2021-04-27**: Updated changed feed
       * **2021-04-15**: Added participant attributes
       * **2021-02-01**: Published documentation
 
@@ -501,8 +502,8 @@ paths:
            $ref: '#/components/responses/NotImplementedError'
       tags:
         - Participant
-  /v2/{country}/changed/company/{date-time}:
-    summary: Returns a list of VAT and last changed date.
+  /v2/{country}/changed/company/{change_id}:
+    summary: Returns a list of VAT and last changed date
     description: This resource represents a list of VAT and last changed date.
     get:
       summary: A list of VAT and last changed date.
@@ -516,13 +517,13 @@ paths:
           schema:
             enum: [dk, no]
             type: string
-        - name: date-time
+        - name: change_id
           in: path
-          description: An ISO 8601 date and time.
+          description: The last change id
           required: true
           schema:
-            type: string
-            format: date-time
+            type: integer
+            format: int64
       responses:
         '200':
           description: Results
@@ -1581,6 +1582,10 @@ components:
             unix:
               type: integer
               format: int64
+        change_id:
+           type: integer
+           format: int64
+           description: The change id that you need to use for your new request
     Error:
       type: object
       properties:

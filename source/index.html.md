@@ -38,6 +38,8 @@ This API is only for paying customers.
   * Only understands JSON
 
 ### Changelog
+  * **2021-04-27**: Updated changed feed
+  * **2021-04-15**: Added participant attributes
   * **2021-02-01**: Published documentation
 
 ### Endpoints
@@ -102,9 +104,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/company/0"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -278,9 +280,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/search/company"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -544,9 +546,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/suggestions/company/string"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -722,9 +724,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/subsidiary/0"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -898,9 +900,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/search/subsidiary"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -1094,9 +1096,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/suggestions/subsidiary/string"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -1272,9 +1274,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/participant/0"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -1448,9 +1450,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/search/participant"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -1636,9 +1638,9 @@ import requests
 url = "https://rest.cvrapi.dk/v2/dk/suggestions/participant/string"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -1772,7 +1774,7 @@ authentication
 
 ```shell
 curl --request GET \
-  --url https://rest.cvrapi.dk/v2/dk/changed/company/2019-08-24T14%3A15%3A22Z \
+  --url https://rest.cvrapi.dk/v2/dk/changed/company/0 \
   --header 'Accept: application/json' \
   --header 'Authorization: Basic {access-token}'
 ```
@@ -1783,7 +1785,7 @@ curl --request GET \
 $curl = curl_init();
 
 curl_setopt_array($curl, [
-  CURLOPT_URL => "https://rest.cvrapi.dk/v2/dk/changed/company/2019-08-24T14%3A15%3A22Z",
+  CURLOPT_URL => "https://rest.cvrapi.dk/v2/dk/changed/company/0",
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => "",
   CURLOPT_MAXREDIRS => 10,
@@ -1811,12 +1813,12 @@ if ($err) {
 ```python
 import requests
 
-url = "https://rest.cvrapi.dk/v2/dk/changed/company/2019-08-24T14%3A15%3A22Z"
+url = "https://rest.cvrapi.dk/v2/dk/changed/company/0"
 
 headers = {
-    'Accept': "application/json",
-    'Authorization': "Basic {access-token}"
-    }
+    "Accept": "application/json",
+    "Authorization": "Basic {access-token}"
+}
 
 response = requests.request("GET", url, headers=headers)
 
@@ -1834,7 +1836,7 @@ import (
 
 func main() {
 
-	url := "https://rest.cvrapi.dk/v2/dk/changed/company/2019-08-24T14%3A15%3A22Z"
+	url := "https://rest.cvrapi.dk/v2/dk/changed/company/0"
 
 	req, _ := http.NewRequest("GET", url, nil)
 
@@ -1864,7 +1866,7 @@ xhr.addEventListener("readystatechange", function () {
   }
 });
 
-xhr.open("GET", "https://rest.cvrapi.dk/v2/dk/changed/company/2019-08-24T14%3A15%3A22Z");
+xhr.open("GET", "https://rest.cvrapi.dk/v2/dk/changed/company/0");
 xhr.setRequestHeader("Accept", "application/json");
 xhr.setRequestHeader("Authorization", "Basic {access-token}");
 
@@ -1872,7 +1874,7 @@ xhr.send(data);
 ```
 
 ```csharp
-var client = new RestClient("https://rest.cvrapi.dk/v2/dk/changed/company/2019-08-24T14%3A15%3A22Z");
+var client = new RestClient("https://rest.cvrapi.dk/v2/dk/changed/company/0");
 var request = new RestRequest(Method.GET);
 request.AddHeader("Accept", "application/json");
 request.AddHeader("Authorization", "Basic {access-token}");
@@ -1884,7 +1886,7 @@ require 'uri'
 require 'net/http'
 require 'openssl'
 
-url = URI("https://rest.cvrapi.dk/v2/dk/changed/company/2019-08-24T14%3A15%3A22Z")
+url = URI("https://rest.cvrapi.dk/v2/dk/changed/company/0")
 
 http = Net::HTTP.new(url.host, url.port)
 http.use_ssl = true
@@ -1898,7 +1900,7 @@ response = http.request(request)
 puts response.read_body
 ```
 
-`GET /v2/{country}/changed/company/{date-time}`
+`GET /v2/{country}/changed/company/{change_id}`
 
 Returns a list of VAT and last changed date.
 
@@ -1907,7 +1909,7 @@ Returns a list of VAT and last changed date.
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
 |country|path|string|true|Country|
-|date-time|path|string(date-time)|true|An ISO 8601 date and time.|
+|change_id|path|integer(int64)|true|The last change id|
 
 #### Enumerated Values
 
@@ -2499,6 +2501,12 @@ and
     "www": "string",
     "phone": "string"
   },
+  "attributes": {
+    "type": "original_citizenship",
+    "life": {
+      "value": "string"
+    }
+  },
   "life": {
     "name": "string",
     "profession": "string",
@@ -2534,6 +2542,7 @@ continued
 |Name|Type|Description|
 |---|---|---|---|---|
 |contact|[Contact](#schemacontact)|none|
+|attributes|[ParticipantAttributes](#schemaparticipantattributes)|none|
 |life|[ParticipantLife](#schemaparticipantlife)|none|
 
 <h2 id="tocS_Address">Address</h2>
@@ -3568,6 +3577,61 @@ continued
 |life|[Life](#schemalife)|none|
 |roles|[ParticipantRoles](#schemaparticipantroles)|none|
 
+<h2 id="tocS_ParticipantLife">ParticipantLife</h2>
+<!-- backwards compatibility -->
+<a id="schemaparticipantlife"></a>
+<a id="schema_ParticipantLife"></a>
+<a id="tocSparticipantlife"></a>
+<a id="tocsparticipantlife"></a>
+
+```json
+{
+  "name": "string",
+  "profession": "string",
+  "deceased": true
+}
+
+```
+
+### Properties
+
+|Name|Type|Description|
+|---|---|---|---|---|
+|name|string¦null|Participant name|
+|profession|string¦null|Participants profession|
+|deceased|boolean|If this participant is deceased|
+
+<h2 id="tocS_ParticipantAttributes">ParticipantAttributes</h2>
+<!-- backwards compatibility -->
+<a id="schemaparticipantattributes"></a>
+<a id="schema_ParticipantAttributes"></a>
+<a id="tocSparticipantattributes"></a>
+<a id="tocsparticipantattributes"></a>
+
+```json
+{
+  "type": "original_citizenship",
+  "life": {
+    "value": "string"
+  }
+}
+
+```
+
+### Properties
+
+|Name|Type|Description|
+|---|---|---|---|---|
+|type|string|The attribute type|
+|life|object|none|
+|» value|string|The value|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|type|original_citizenship|
+
 <h2 id="tocS_ParticipantRoles">ParticipantRoles</h2>
 <!-- backwards compatibility -->
 <a id="schemaparticipantroles"></a>
@@ -3629,30 +3693,6 @@ continued
 |type|real_owner|
 |type|supervisory_board|
 
-<h2 id="tocS_ParticipantLife">ParticipantLife</h2>
-<!-- backwards compatibility -->
-<a id="schemaparticipantlife"></a>
-<a id="schema_ParticipantLife"></a>
-<a id="tocSparticipantlife"></a>
-<a id="tocsparticipantlife"></a>
-
-```json
-{
-  "name": "string",
-  "profession": "string",
-  "deceased": true
-}
-
-```
-
-### Properties
-
-|Name|Type|Description|
-|---|---|---|---|---|
-|name|string¦null|Participant name|
-|profession|string¦null|Participants profession|
-|deceased|boolean|If this participant is deceased|
-
 <h2 id="tocS_CompanyChangedFeed">CompanyChangedFeed</h2>
 <!-- backwards compatibility -->
 <a id="schemacompanychangedfeed"></a>
@@ -3666,7 +3706,8 @@ continued
   "lastupdate": {
     "datetime": "2019-08-24T14:15:22Z",
     "unix": 0
-  }
+  },
+  "change_id": 0
 }
 
 ```
@@ -3679,6 +3720,7 @@ continued
 |lastupdate|object|none|
 |» datetime|string(date-time)|Date and time in ISO 8601.|
 |» unix|integer(int64)|none|
+|change_id|integer(int64)|The change id that you need to use for your new request|
 
 <h2 id="tocS_Error">Error</h2>
 <!-- backwards compatibility -->
