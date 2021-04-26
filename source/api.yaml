@@ -506,7 +506,7 @@ paths:
     summary: Returns a list of VAT and last changed date
     description: This resource represents a list of VAT and last changed date.
     get:
-      summary: A list of VAT and last changed date.
+      summary: A list of VAT and last changed date
       description: Returns a list of VAT and last changed date
       operationId: companyChanged
       parameters:
@@ -1578,7 +1578,7 @@ components:
             datetime:
               type: string
               format: date-time
-              description: Date and time in ISO 8601.
+              description: Date and time in ISO 8601
             unix:
               type: integer
               format: int64

@@ -1766,7 +1766,7 @@ authentication
 
 <h1 id="cvr-api-feeds">Feeds</h1>
 
-## A list of VAT and last changed date.
+## A list of VAT and last changed date
 
 <a id="opIdcompanyChanged"></a>
 
@@ -1904,7 +1904,7 @@ puts response.read_body
 
 Returns a list of VAT and last changed date
 
-<h3 id="a-list-of-vat-and-last-changed-date.-parameters">Parameters</h3>
+<h3 id="a-list-of-vat-and-last-changed-date-parameters">Parameters</h3>
 
 |Name|In|Type|Required|Description|
 |---|---|---|---|---|
@@ -1918,7 +1918,7 @@ Returns a list of VAT and last changed date
 |country|dk|
 |country|no|
 
-<h3 id="a-list-of-vat-and-last-changed-date.-responses">Responses</h3>
+<h3 id="a-list-of-vat-and-last-changed-date-responses">Responses</h3>
 
 |Status|Meaning|Description|Schema|
 |---|---|---|---|
@@ -3718,7 +3718,7 @@ continued
 |---|---|---|---|---|
 |vat|integer(int64)|VAT|
 |lastupdate|object|none|
-|» datetime|string(date-time)|Date and time in ISO 8601.|
+|» datetime|string(date-time)|Date and time in ISO 8601|
 |» unix|integer(int64)|none|
 |change_id|integer(int64)|The change id that you need to use for your new request|
 
