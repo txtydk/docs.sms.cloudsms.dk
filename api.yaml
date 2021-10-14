@@ -1,0 +1,217 @@
+openapi: 3.0.0
+servers:
+  - url: https://sms.cloudsms.dk
+    description: Production
+info:
+  version: "6.0.0"
+  title: Txty SMS
+  description: |
+    You can only access this API with a username and token. To acquire that please fill out your contact information on the public website.
+
+    This API is only for paying customers.
+
+    ### Conventions
+      * Basic authentication
+      * Only understands HTTPS
+      * Only understands JSON
+
+    ### Changelog
+      * **2021-10-14**: Published documentation
+
+    ### Endpoints
+security:
+  - username: []
+    token: []
+tags:
+  - name: Company
+  - name: Subsidiary
+  - name: Participant
+  - name: Feeds
+paths:
+  /v6/sms:
+    summary: Send a single SMS
+    description: This ressource allows you to send a single SMS.
+    get:
+      summary: Send a single SMS
+      description: Send a single SMS and return the SMS object
+      operationId: sms
+      parameters:
+        - name: msisdn
+          in: query
+          description: Recipient number with dialcode
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: sender
+          in: query
+          description: Sender number
+          required: true
+          schema:
+            type: string
+        - name: text
+          in: query
+          description: Message content
+          required: true
+          schema:
+            type: string
+        - name: settings_premium
+          in: query
+          description: Sets premium
+          required: false
+          schema:
+            type: boolean
+        - name: settings_flash
+          in: query
+          description: Sets flash
+          required: false
+          schema:
+            type: boolean
+        - name: settings_silent
+          in: query
+          description: Sets silent
+          required: false
+          schema:
+            type: boolean
+        - name: settings_scheduled
+          in: query
+          description: Sets scheduled to
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: custom_reference
+          in: query
+          description: Custom reference
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SMS'
+        '400':
+           $ref: '#/components/responses/BadRequestError'
+        '401':
+           $ref: '#/components/responses/UnauthorizedError'
+        '500':
+           $ref: '#/components/responses/InternalServerError'
+        '501':
+           $ref: '#/components/responses/NotImplementedError'
+      tags:
+        - SMS
+components:
+  securitySchemes:
+    username:
+      type: apiKey
+      in: query
+      name: username
+    token:
+      type: apiKey
+      in: query
+      name: token
+  schemas:
+    SMS:
+      type: object
+      properties:
+        guid:
+           type: string
+           description: Our unique id
+        recipient:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              msisdn:
+                 type: integer
+                 format: int64
+                 description: Mobile subscriber number
+              dialcode:
+                 type: integer
+                 format: int64
+                 description: Country code
+              number:
+                 type: integer
+                 format: int64
+                 description: Number
+        message:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              sender:
+                 type: string
+                 description: Sender number
+              price:
+                 type: number
+                 format: float
+                 description: The price you have paid to send this message
+              characters:
+                 type: integer
+                 format: int64
+                 description: The total sum of characters used in the text
+              message_count:
+                 type: integer
+                 format: int64
+                 description: The total sum of messages
+              text:
+                 type: string
+                 description: The message content
+              reference:
+                 type: string
+                 description: A custom reference you can define to identify messages in your own system
+        settings:
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              premium:
+                 type: boolean
+                 description: If this message billed the user for the message (only available for specific customers)
+              flash:
+                 type: boolean
+                 description: If this message will show as a flash on the recipients phone
+              silent:
+                 type: boolean
+                 description: If this message is silent
+              scheduled_to:
+                 type: string
+                 format: date-time
+                 description: If this message is scheduled for later delivery
+    Error:
+      type: object
+      properties:
+        error:
+           type: string
+           enum: [BAD_REQUEST, INTERNAL_ERROR, METHOD_NOT_IMPLEMENTED, MSISDN_EMPTY, MSISDN_INVALID, MSISDN_LONG, MSISDN_ALPHA, SENDER_EMPTY, SENDER_INVALID, SENDER_LONG, SENDER_LONG, TEXT_EMPTY, TEXT_LONG, SCHEDULED_INVALID, SCHEDULED_INVALID, REFERENCE_LONG, CANNOT_AFFORD, INTERNAL_ERROR, INTERNAL_ERROR]
+           description: Error code
+        message:
+           type: string
+           description: Message that gives more information on the error
+  responses:
+    BadRequestError:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnauthorizedError:
+      description: Authentication information is missing or invalid
+    InternalServerError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotImplementedError:
+      description: Internal Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
